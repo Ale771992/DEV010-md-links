@@ -1,3 +1,4 @@
+// En el archivo cli.js has implementado la lógica para interactuar con el usuario
 //THEN Y CATCH 
 const { mdLinks } = require('./index.js')
 const app = require('./lib/app.js')
