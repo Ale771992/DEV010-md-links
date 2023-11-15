@@ -23,26 +23,30 @@ const mdLinks = (filePath, validate = false) => {
             const matches = data.matchAll(textRex)
             // Se crea un nuevo arreglo con los resultados de 'matches'
             // map itera sobre cada elemento del arreglo y crea objeto con las propiedades
-            const arrayLinks = Array.from(matches).map(match => ({
+            const arrayLinks = Array.from(data.matchAll(textRex)).map(match => ({
               href: match[2],
               text: match[1],
               file: absolutePath,
             }))
             if (validate) {
               // validateLinks valida cada enlace en el arreglo haciendo una solicitud HTTP y devuelve los enlances validados
-              app.validateLinks(arrayLinks) // Si 'validate' es true se llama a validateLinks con el argumento 'arrayLinks'
+              return app.validateLinks(arrayLinks) // Si 'validate' es true se llama a validateLinks con el argumento 'arrayLinks'
                 .then(validatedArray => {
                   resolve(validatedArray)
                 })
                 .catch(error => {
                   reject(error)
                 })
+            } else {
+              resolve(arrayLinks)
             }
           }
         })
       } else {
         resolve([])
       }
+    } else {
+      reject(new Error('File not found'))
     }
   })
 }
